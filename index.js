@@ -44,7 +44,7 @@ app.put('/users/:userId', (req, res) => {
   }
   users[userIndex] = { ...users[userIndex], ...updatedUserData }
 
-  res.json({ message: 'User updated successfully', user: users[userIndex] })
+  res.send('User updated successfully')
 })
 
 app.delete('/users/:userId', (req, res) => {
