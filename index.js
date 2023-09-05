@@ -34,16 +34,30 @@ app.post('/users', (req, res) => {
 })
 
 app.put('/users/:userId', (req, res) => {
+  const { userId } = req.params
+  const updatedUserData = req.body
 
+  const userIndex = users.findIndex((user) => user._id === userId)
+
+  if (userIndex === -1) {
+    return res.json('User not found')
+  }
+  users[userIndex] = { ...users[userIndex], ...updatedUserData }
+
+  res.json({ message: 'User updated successfully', user: users[userIndex] })
 })
 
-app.delete('users/:userId', (req, res) => {
-  const userId = req.params.userId
+app.delete('/users/:userId', (req, res) => {
+  const userId = parseInt(req.params.userId)
 
-  let user = users[userId - 1]
-  user.isActive = false
-  res.json(user)
-})
+  const userIndex = users.findIndex((user) => user.id === userId)
+
+  if (userIndex === -1) {
+    return res.send('User not found')
+  }
+  users[userIndex].isActive = false
+  res.send('Deleted')
+});
 
 
 
